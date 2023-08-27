@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-
+app.set('view engine', 'ejs');
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 
@@ -10,8 +10,30 @@ let products = [
     { id: 3, name: 'Sony PlayStation 5', price: 499.99 },
     { id: 4, name: 'MacBook Pro 16', price: 2399.99 },
     { id: 5, name: 'DJI Mavic Air 2', price: 799.99 },
+    { id: 6, name: 'iPhone 12 Pro', price: 1099.99 },
+    { id: 7, name: 'Samsung Galaxy S21', price: 999.99 },
+    { id: 8, name: 'Sony PlayStation 5', price: 499.99 },
+    { id: 9, name: 'MacBook Pro 16', price: 2399.99 },
+    { id: 10, name: 'DJI Mavic Air 2', price: 799.99 },
 ];
+// let products = [
+//     { id: 1, name: 'iPhone 12 Pro', price: 1099.99 },
+//     { id: 2, name: 'Samsung Galaxy S21', price: 999.99 },
+//     { id: 3, name: 'Sony PlayStation 5', price: 499.99 },
+//     { id: 4, name: 'MacBook Pro 16', price: 2399.99 },
+//     { id: 5, name: 'DJI Mavic Air 2', price: 799.99 },
+// ];
+app.get('/', (req, res) => {
+    res.render('main');
+  });
 
+app.get('/products', (req, res) => {
+    res.render('home',{products});
+  });
+
+app.get('/products/:id', (req, res) => {
+    res.render('productDetails',{products,data:{ id: req.params.id}});
+  });
 app.use((req, res, next) => {
     const currentDateTime = new Date().toLocaleString();
     const requestMethod = req.method;
@@ -41,6 +63,11 @@ app.use((error,req,res,next)=>{
         message : error.message
     })
 })
+
 app.listen(3000, () => {
     console.log('Server is listening on port 3000');
 });
+
+module.exports ={
+    products
+}

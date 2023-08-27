@@ -1,26 +1,26 @@
 const express = require('express');
 const router = express.Router()
 
-
-let products = [
-    { id: 1, name: 'iPhone 12 Pro', price: 1099.99 },
-    { id: 2, name: 'Samsung Galaxy S21', price: 999.99 },
-    { id: 3, name: 'Sony PlayStation 5', price: 499.99 },
-    { id: 4, name: 'MacBook Pro 16', price: 2399.99 },
-    { id: 5, name: 'DJI Mavic Air 2', price: 799.99 },
-    { id: 6, name: 'iPhone 12 Pro', price: 1099.99 },
-    { id: 7, name: 'Samsung Galaxy S21', price: 999.99 },
-    { id: 8, name: 'Sony PlayStation 5', price: 499.99 },
-    { id: 9, name: 'MacBook Pro 16', price: 2399.99 },
-    { id: 10, name: 'DJI Mavic Air 2', price: 799.99 },
-];
+const myFunctions = require('../app.js')
+const products = myFunctions.products;
+// let products = [
+//     { id: 1, name: 'iPhone 12 Pro', price: 1099.99 },
+//     { id: 2, name: 'Samsung Galaxy S21', price: 999.99 },
+//     { id: 3, name: 'Sony PlayStation 5', price: 499.99 },
+//     { id: 4, name: 'MacBook Pro 16', price: 2399.99 },
+//     { id: 5, name: 'DJI Mavic Air 2', price: 799.99 },
+//     { id: 6, name: 'iPhone 12 Pro', price: 1099.99 },
+//     { id: 7, name: 'Samsung Galaxy S21', price: 999.99 },
+//     { id: 8, name: 'Sony PlayStation 5', price: 499.99 },
+//     { id: 9, name: 'MacBook Pro 16', price: 2399.99 },
+//     { id: 10, name: 'DJI Mavic Air 2', price: 799.99 },
+// ];
 
 router.get('/', (req, res) => {
     let responseHTML = '';
     products.forEach(product => {
         responseHTML += `Product: ${product.name}, Price: ${product.price} <br>`;
     });
-
     // Send the HTML response
     res.send(responseHTML);
 });
@@ -47,14 +47,15 @@ router.get('/search', (req, res) => {
     res.send(responseHTML);
     //http://localhost:3000/products/search?q=shoes&minPrice=20&maxPrice=100
 });
-router.get('/:id', (req, res) => {
-    let selected = req.params.id;
-    if (products[selected]) {
-        res.send(`Product ID : ${(products[selected - 1].id)}. <br> Product Name : ${(products[selected - 1].name)}. <br> Product Price : ${(products[selected - 1].price)}`);
-    } else {
-        res.status(404).send('Product not found')
-    }
-});
+// router.get('/:id', (req, res) => {
+//     let selected = req.params.id;
+
+//     if (products[selected]) {
+//         res.send(`Product ID : ${(products[selected - 1].id)}. <br> Product Name : ${(products[selected - 1].name)}. <br> Product Price : ${(products[selected - 1].price)}`);
+//     } else {
+//         res.status(404).send('Product not found')
+//     }
+// });
 router.post('/', (req, res) => {
     if (req.body.id) {
         const newProduct = req.body;

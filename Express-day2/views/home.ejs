@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>EJS</title>
+</head>
+<body>
+  <h1>Products(<%= products.length %>) :  </h1>
+  <ul>
+    <% products.forEach(product=>{ %>
+     <li><%= product.name %> (<%= product.price %>)
+</li>    <% }) %>
+
+  </ul>
+</body>
+</html>
