@@ -3,6 +3,7 @@ const router = express.Router()
 
 // const myFunctions = require('../app.js')
 // const products = myFunctions.products;
+
 let products = [
     { id: 1, name: 'iPhone 12 Pro', price: 1099.99 },
     { id: 2, name: 'Samsung Galaxy S21', price: 999.99 },
@@ -17,7 +18,7 @@ let products = [
 ];
 
 router.get('/search', (req, res) => {
-    const searchQuery = req.query.q;
+    const q = req.query.q;
     const minPrice = req.query.minPrice;
     const maxPrice = req.query.maxPrice;
     var array = []
@@ -27,12 +28,12 @@ router.get('/search', (req, res) => {
             array.push(products[i]);
         }
     }
-    let responseHTML = `Searching for products with query: ${searchQuery}, minPrice: ${minPrice}, maxPrice: ${maxPrice} <br><br>`;
+    let responseHTML = `Searching for products with query: ${q}, minPrice: ${minPrice}, maxPrice: ${maxPrice} <br><br>`;
     array.forEach(product => {
         responseHTML += `Product: ${product.name}, Price: ${product.price} <br>`;
     });
-    res.send(responseHTML);
-    //      http://localhost:3000/products/search?q=shoes&minPrice=20&maxPrice=100
+    res.send(responseHTML); 
+    //      http://localhost:3000/products/search?q=shoes&minPrice=0&maxPrice=1000
 });
 
 // router.get('/', (req, res) => {
@@ -55,17 +56,26 @@ router.get('/search', (req, res) => {
 //     }
 // });
 
+router.get('/', (req, res) => {
+    res.render('../views/home',{ products });
+  });
+  
 router.post('/', (req, res) => {
-    if (req.body.id) {
-        const newProduct = req.body;
+    const newId = req.query.id;
+    const newName = req.query.name;
+    const newPrice = req.query.price;
+    var newProduct={};
+    if (req.query.id) {
+        newProduct ={id: newId, name: newName, price: newPrice}
         products.push(newProduct);
         console.log(products);
-        res.status(201).json(newProduct);
+res.send(newProduct)
         console.log('Product added successfully')
     } else {
         const err = new Error('Invalid product format.');
         err.status = 404;
         res.status(err.status).json({ message: err.message });
+        console.log(error)
     }
 });
 
@@ -93,4 +103,4 @@ router.put('/:id', (req, res) => {
     }
 })
 
-module.exports = router;
+module.exports = {router,products};
