@@ -4,6 +4,17 @@ app.set('view engine', 'ejs');
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 const myFunctions = require('./routes/products')
+
+app.use((req, res, next) => {
+  const currentDateTime = new Date().toLocaleString();
+  const requestMethod = req.method;
+  const requestUrl = req.url;
+  console.log(`--------New Request--------`);
+  console.log(`Current time: ${currentDateTime}`);
+  console.log(`request method: ${requestMethod}`);
+  console.log(`request URL: ${requestUrl}`);
+  next();
+});
 app.use('/products', myFunctions.router);
 const products = myFunctions.products;
 
@@ -27,30 +38,17 @@ const products = myFunctions.products;
 //     { id: 5, name: 'DJI Mavic Air 2', price: 799.99 },
 // ];
 
-app.use((req, res, next) => {
-  const currentDateTime = new Date().toLocaleString();
-  const requestMethod = req.method;
-  const requestUrl = req.url;
-  console.log(`--------New Request--------`);
-  console.log(`Current time: ${currentDateTime}`);
-  console.log(`request method: ${requestMethod}`);
-  console.log(`request URL: ${requestUrl}`);
-  next();
-});
+
 
 app.get('/', (req, res) => {
   res.render('main');
 });
 
-// app.get('/products', (req, res) => {
-//   res.render('home', { products });
-// });
-
 app.get('/products/:id', (req, res) => {
   res.render('productDetails', { products, data: { id: req.params.id } });
 });
 
-app.all('*', (req, res, next) => {
+app.all('*',(req, res, next) => {
   const err = new Error(`Can't find " ${req.originalUrl} " on the server!`);
   err.status = 'fail';
   err.statusCode = 404;

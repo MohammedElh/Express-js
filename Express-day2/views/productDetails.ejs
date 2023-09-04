@@ -9,18 +9,10 @@
     <h1>Product (<%= data.id %>)</h1>
     <p>
         Product ID : <%= products[data.id- 1].id %>. <br> Product Name : <%=products[data.id - 1].name%>. <br> Product Price : <%=products[data.id - 1].price%> <br>
-        <% if(data.id==1){ %>
-            This the first product on our store.
-            <% } else if (data.id==2){ %>    
-            This the second product on our store.
+        <% if(data.id==1){ %> This the first product on our store.
+            <% } else if (data.id==2){ %> This the second product on our store.
             <% }else { %> This the <%= data.id %>th product on our store.
-            <% } %>    
-
-        
-        
-        
-        
-        
+            <% } %>
         </p>
 </body>
 </html>

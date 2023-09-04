@@ -92,8 +92,6 @@ router.delete('/:id', (req, res) => {
 );
 
 router.put('/:id', (req, res) => {
-    LastId = products[products.length - 1].id;
-
     let selected = req.params.id;
     if (products[selected]) {
         products.splice(1, i, userInput);
